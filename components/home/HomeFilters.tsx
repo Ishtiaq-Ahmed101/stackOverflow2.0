@@ -10,7 +10,7 @@ const HomeFilters = () => {
         {HomePageFilters.map((item)=>{
             return(
                 <Button key={item.value} onClick={()=>{}}
-                className={`body-medium rounded-lg px-6 py-3 shadow-none capitalize ${active === item.value ? 'bg-primary-100 text-primary-500': 'bg-light-800 text-light-500'} `}
+                className={`body-medium rounded-lg px-6 py-3 shadow-none capitalize background-light800_dark300 text-light400_light500 ${active === item.value ? 'bg-primary-100 text-primary-500': 'bg-light-800 text-light-500'} `}
                 >
                 {item.name}
             </Button>
