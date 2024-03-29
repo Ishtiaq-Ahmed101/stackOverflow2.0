@@ -21,7 +21,7 @@ interface QuestionProps {
 
 const QuestionCard = ({ _id, title, tags, author, upvotes, views, answers, createdAt}: QuestionProps) => {
   return (
-    <div>QuestionCard</div>
+    <div>QuestionCards</div>
   )
 }
 
