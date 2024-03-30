@@ -3,19 +3,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import RenderTag from '../RenderTag';
 const hotQuestions = [
-  {_id:1 , title: 'How Do I Use express as a custom server in next.js'},
-  {_id:2 , title: 'Cascading Deltes in SqlAlchemy?'},
-  {_id:3 , title: 'How to perfectly Center a Div with Tailwind Css?'},
-  {_id:4 , title: 'Best Practices for data fetching in a Next.js application with serve-Side (SSR)?'},
-  {_id:5 , title: 'Redux toolkit Not Updating state as expected'},
+  {_id:'1' , title: 'How Do I Use express as a custom server in next.js'},
+  {_id:'2' , title: 'Cascading Deltes in SqlAlchemy?'},
+  {_id:'3' , title: 'How to perfectly Center a Div with Tailwind Css?'},
+  {_id:'4' , title: 'Best Practices for data fetching in a Next.js application with serve-Side (SSR)?'},
+  {_id:'5' , title: 'Redux toolkit Not Updating state as expected'},
 ];
 
 const popularTags = [
-  {_id:1, name: "javascript", totalQuestions:5 },
-  {_id:2, name: "react", totalQuestions:4 },
-  {_id:3, name: "next", totalQuestions:5 },
-  {_id:4, name: "vue", totalQuestions:3 },
-  {_id:5, name: "reduc", totalQuestions:10 },
+  {_id:"1", name: "javascript", totalQuestions:5 },
+  {_id:"2", name: "react", totalQuestions:4 },
+  {_id:"3", name: "next", totalQuestions:5 },
+  {_id:"4", name: "vue", totalQuestions:3 },
+  {_id:"5", name: "reduc", totalQuestions:10 },
 ]
 
 const RightSideBar = () => {
