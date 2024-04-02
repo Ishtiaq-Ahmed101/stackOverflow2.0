@@ -36,7 +36,7 @@ const QuestionCard = ({ _id, title, tags, author, upvotes, views, answers, creat
             </h3>
           </Link>
         </div>
-        { /*if sighned in add edit delete actions */}
+        { /*if sighned in add edit delete actionss */}
  
       </div>
       <div className='mt-3.5 flex flex-wrap gap-2'>
