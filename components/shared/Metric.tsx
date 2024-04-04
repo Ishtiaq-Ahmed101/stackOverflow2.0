@@ -56,5 +56,5 @@ const Metric = ({
     </div>
   )
 }
-
+ 
 export default Metric
