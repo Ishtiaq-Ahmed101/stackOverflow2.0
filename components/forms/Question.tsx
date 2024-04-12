@@ -88,7 +88,7 @@ const Question = () => {
                   {...field} />
               </FormControl>
               <FormDescription className='body-regular mt-2.5 text-light-500'>
-                Be specific and imagine you&apos;re asking a question to another person.
+                Be specific and imagine if you&apos;re asking a question to another person.
               </FormDescription>
               <FormMessage className='text-red-500' />
             </FormItem>
