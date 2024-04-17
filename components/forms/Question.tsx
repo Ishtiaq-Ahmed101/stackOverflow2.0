@@ -18,12 +18,14 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { QuestionsSchema } from '@/lib/validations'
-import { Badge } from 'lucide-react';
+import { useState } from 'react';
+const type: any = 'create'
 
 
 
 const Question = () => {
-  const editorRef = useRef(null); 
+  const editorRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -36,40 +38,45 @@ const Question = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof QuestionsSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    setIsSubmitting(true);
+   try {
+      // make an async call to your API -> create a 
+   } catch (error) {
+    
+   } finally{
+    setIsSubmitting(false);
+   }
   }
 
-  const handleInputKeyDown = (e : React.KeyboardEvent<HTMLInputElement>, field : any) =>{
-    if(e.key === 'Enter'  && field.name === 'tags'){
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
+    if (e.key === 'Enter' && field.name === 'tags') {
       e.preventDefault();
 
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
-      if(tagValue !== '' ){
-        if(tagValue.length > 15){
-          return form.setError('tags',{
+      if (tagValue !== '') {
+        if (tagValue.length > 15) {
+          return form.setError('tags', {
             type: 'required',
             message: 'Tag must be less than 15 characters'
-          } )
+          })
         }
 
-        if(!field.value.includes(tagValue as never)){
-          form.setValue('tags',[...field.value, tagValue] );
+        if (!field.value.includes(tagValue as never)) {
+          form.setValue('tags', [...field.value, tagValue]);
           tagInput.value = ''
           form.clearErrors('tags')
         }
       }
-      else{
+      else {
         form.trigger();
       }
     }
-    }
-    const handleTagRemove = (tag:string, field: any)=>{
-      const newTags = field.value.filter((t: string) => t !== tag);
-      form.setValue('tags', newTags)
-    }
+  }
+  const handleTagRemove = (tag: string, field: any) => {
+    const newTags = field.value.filter((t: string) => t !== tag);
+    form.setValue('tags', newTags)
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-10">
@@ -109,7 +116,8 @@ const Question = () => {
 
                   onInit={(evt, editor) => {
                     // @ts-ignore
-                    editorRef.current = editor}}
+                    editorRef.current = editor
+                  }}
                   initialValue=""
                   init={{
                     height: 350,
@@ -117,7 +125,7 @@ const Question = () => {
                     plugins: [
                       'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                       'anchor', 'searchreplace', 'visualblocks', 'codesample', 'fullscreen',
-                      'insertdatetime', 'media', 'table',  'wordcount'
+                      'insertdatetime', 'media', 'table', 'wordcount'
                     ],
                     toolbar: 'undo redo |' +
                       'codesample | bold italic forecolor | alignleft aligncenter |' +
@@ -144,33 +152,33 @@ const Question = () => {
                 *</span></FormLabel>
               <FormControl className='mt-3.5'>
                 <>
-                <Input
-                  className='no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border '
-                  placeholder='Add Tags...'
-                  onKeyDown={(e) => {handleInputKeyDown(e, field)}}
-                />
-                {field.value.length > 0 && (
-                  <div className='flex-start mt-2.5 gap-2.5'>
-                    {field.value.map((tag: any)=>(
-                      <Badge key={tag}
-                      className='subtle-medium background-light800_dark300 text-light400_dark500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize '
-                      onClick={() => handleTagRemove(tag,field) }
-                      >
-                        {tag}
-                        <Image
-                        src="assets/icons/close.svg"
-                        alt='close icon'
-                        width={12}
-                        height={12}
-                        className='cursor-pointer object-contain invert-0 dark:invert'
-                      
-                        
-                        />
-                      </Badge>
-                    ))}
+                  <Input
+                    className='no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border '
+                    placeholder='Add Tags...'
+                    onKeyDown={(e) => { handleInputKeyDown(e, field) }}
+                  />
+                  {field.value.length > 0 && (
+                    <div className='flex-start mt-2.5 gap-2.5'>
+                      {field.value.map((tag: any) => (
+                        <Badge key={tag}
+                          className='subtle-medium background-light800_dark300 text-light400_dark500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize '
+                          onClick={() => handleTagRemove(tag, field)}
+                        >
+                          {tag}
+                          <Image
+                            src="assets/icons/close.svg"
+                            alt='close icon'
+                            width={12}
+                            height={12}
+                            className='cursor-pointer object-contain invert-0 dark:invert'
 
-                  </div>
-                )}
+
+                          />
+                        </Badge>
+                      ))}
+
+                    </div>
+                  )}
                 </>
               </FormControl>
               <FormDescription className='body-regular mt-2.5 text-light-500'>
@@ -180,7 +188,17 @@ const Question = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button className='primary-gradient !text-light-900 ' disabled={isSubmitting} type="submit">
+          {isSubmitting ? (
+            <>
+              {type === 'edit' ? 'Editing...' : "Posting..."}
+            </>
+          ) : (
+            <>
+              {type === 'edit' ? 'edit Question' : 'Ask a Question'}
+            </>
+          )}
+          Submit</Button>
       </form>
     </Form>
   )
